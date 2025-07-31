@@ -1,0 +1,42 @@
+{
+  "name": "picking_automatizado",
+  "version": "1.0.0",
+  "description": "aplicacion para piking de linea automatizado",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": " npm run build && node dist/app.js",
+    "dev": "nodemon --exec ts-node src/app.ts",
+    "build": "rimraf dist && tsc",
+    "migrate": "sequelize-cli db:migrate"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/crisdg/picking-automatizado.git"
+  },
+  "author": "Cristian Daniel Gomez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/crisdg/picking-automatizado/issues"
+  },
+  "homepage": "https://github.com/crisdg/picking-automatizado#readme",
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.1.0",
+    "@types/sequelize": "^4.28.20",
+    "nodemon": "^3.1.10",
+    "rimraf": "^6.0.1",
+    "sequelize-cli": "^6.6.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@sequelize/sqlite3": "^7.0.0-alpha.46",
+    "bcryptjs": "^3.0.2",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "sequelize": "^6.37.7",
+    "sqlite3": "^5.1.7"
+  }
+}
