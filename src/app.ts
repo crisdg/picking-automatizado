@@ -1,6 +1,6 @@
 import express from "express";
 import db from "./db/models";
-import { userRoutes, clienteRoutes, pedidoRoutes, entregaRoutes } from "./routes/index";
+import { userRoutes, clienteRoutes, pedidoRoutes, entregaRoutes, entregaProductoRoutes } from "./routes/index";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -17,6 +17,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/clientes", clienteRoutes);
 app.use("/api/pedidos", pedidoRoutes);
 app.use("/api/entregas", entregaRoutes);
+app.use("/api/entregaproductos", entregaProductoRoutes);
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
