@@ -1,3 +1,4 @@
 import userController from "./user.controller";
+import clienteController from "./cliente.controller";
 
-export { userController };
+export { userController, clienteController };

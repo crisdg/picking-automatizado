@@ -1,6 +1,6 @@
 import express from "express";
 import db from "./db/models";
-import userRoutes from "./routes/user.route";
+import { userRoutes, clienteRoutes } from "./routes/index";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -14,7 +14,7 @@ db.sequelize.sync().then(() => {
 });
 app.use(express.json());
 app.use("/api/users", userRoutes);
-
+app.use("/api/clientes", clienteRoutes);
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
