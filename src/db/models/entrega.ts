@@ -3,7 +3,6 @@ import { Model, DataTypes, Sequelize, ModelStatic } from 'sequelize';
 interface EntregaAttributes {
     entregaId?: number;
     pedidoId: number;
-    fieldname: string;
     nroEntrega: number;
     estado: string;
     timestamp_inicio: Date;
@@ -15,7 +14,6 @@ interface EntregaAttributes {
 export class Entrega extends Model<EntregaAttributes> implements EntregaAttributes {
     public entregaId!: number;
     public pedidoId!: number;
-    public fieldname!: string;
     public nroEntrega!: number;
     public estado!: string;
     public timestamp_inicio!: Date;
@@ -41,11 +39,14 @@ export function initEntregaModel(sequelize: Sequelize): ModelStatic<Entrega> {
             pedidoId: {
                 type: DataTypes.INTEGER.UNSIGNED,
                 allowNull: false,
+                references: {
+                    model: 'Pedidos',
+                    key: 'pedidoId',
+                },
+                onDelete: 'CASCADE',
+                onUpdate: 'CASCADE',
             },
-            fieldname: {
-                type: DataTypes.STRING,
-                allowNull: false,
-            },
+
             nroEntrega: {
                 type: DataTypes.INTEGER.UNSIGNED,
                 allowNull: false,
