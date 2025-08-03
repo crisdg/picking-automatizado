@@ -23,6 +23,7 @@
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
     "@types/express": "^5.0.3",
+    "@types/multer": "^2.0.0",
     "@types/node": "^24.1.0",
     "@types/sequelize": "^4.28.20",
     "nodemon": "^3.1.10",
@@ -34,8 +35,10 @@
   "dependencies": {
     "@sequelize/sqlite3": "^7.0.0-alpha.46",
     "bcryptjs": "^3.0.2",
+    "csv-parser": "^3.2.0",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
+    "multer": "^2.0.2",
     "sequelize": "^6.37.7",
     "sqlite3": "^5.1.7"
   }

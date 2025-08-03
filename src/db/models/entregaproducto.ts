@@ -2,7 +2,7 @@ import { Model, DataTypes, Sequelize, ModelStatic } from 'sequelize';
 
 interface EntregaProductoAttributes {
     entregaProductoId?: number;
-    entregaId: number;
+    nroEntrega: number;
     puesto: string;
     nivel: string;
     ubicacion: string;
@@ -17,7 +17,7 @@ interface EntregaProductoAttributes {
 
 export class EntregaProducto extends Model<EntregaProductoAttributes> implements EntregaProductoAttributes {
     public entregaProductoId!: number;
-    public entregaId!: number;
+    public nroEntrega!: number;
     public puesto!: string;
     public nivel!: string;
     public ubicacion!: string;
@@ -31,7 +31,7 @@ export class EntregaProducto extends Model<EntregaProductoAttributes> implements
 
     static associate(models: any) {
         // define association here
-        EntregaProducto.belongsTo(models.Entrega, { foreignKey: 'entregaId', as: 'entrega' });
+        EntregaProducto.belongsTo(models.Entrega, { foreignKey: 'nroEntrega', targetKey: 'nroEntrega', as: 'entrega' });
     }
 }
 
@@ -43,9 +43,15 @@ export function initEntregaProductoModel(sequelize: Sequelize): ModelStatic<Entr
                 autoIncrement: true,
                 primaryKey: true,
             },
-            entregaId: {
+            nroEntrega: {
                 type: DataTypes.INTEGER.UNSIGNED,
                 allowNull: false,
+                references: {
+                    model: 'Entregas',
+                    key: 'nroEntrega',
+                },
+                onDelete: 'CASCADE',
+                onUpdate: 'CASCADE',
             },
             puesto: {
                 type: DataTypes.STRING,

@@ -3,5 +3,13 @@ import clienteRoutes from "./cliente.route";
 import pedidoRoutes from "./pedido.route";
 import entregaRoutes from "./entrega.route";
 import entregaProductoRoutes from "./entregaProducto.route";
+import csvUploadRoutes from "./csvUpload.route";
 
-export { userRoutes, clienteRoutes, pedidoRoutes, entregaRoutes, entregaProductoRoutes };
+export { 
+    userRoutes, 
+    clienteRoutes, 
+    pedidoRoutes, 
+    entregaRoutes, 
+    entregaProductoRoutes,
+    csvUploadRoutes 
+};

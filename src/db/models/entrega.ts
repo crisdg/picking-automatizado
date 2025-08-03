@@ -24,7 +24,7 @@ export class Entrega extends Model<EntregaAttributes> implements EntregaAttribut
     static associate(models: any) {
         // define association here
         Entrega.belongsTo(models.Pedido, { foreignKey: 'pedidoId', as: 'pedido' });
-        Entrega.hasMany(models.EntregaProducto, { foreignKey: 'entregaId', as: 'productos' });
+        Entrega.hasMany(models.EntregaProducto, { foreignKey: 'nroEntrega', sourceKey: 'nroEntrega', as: 'productos' });
     }
 }
 
@@ -50,6 +50,7 @@ export function initEntregaModel(sequelize: Sequelize): ModelStatic<Entrega> {
             nroEntrega: {
                 type: DataTypes.INTEGER.UNSIGNED,
                 allowNull: false,
+                unique: true,
             },
             estado: {
                 type: DataTypes.STRING,
