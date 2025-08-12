@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { User } from "../db/models/user";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 const getAllUsers = async (req: Request, res: Response) => {
     try {
@@ -74,4 +75,95 @@ const getUserById = async (req: Request, res: Response) => {
     }
 };
 
-export default { getAllUsers, createUser, updateUser, deleteUser, getUserById };
+const login = async (req: Request, res: Response) => {
+    try {
+        const { nickname, password } = req.body;
+
+        // Validar que se envíen nickname y password
+        if (!nickname || !password) {
+            return res.status(400).json({
+                message: "Nickname and password are required"
+            });
+        }
+
+        // Buscar usuario por nickname
+        const user = await User.findOne({ where: { nickname } });
+        if (!user) {
+            return res.status(401).json({
+                message: "Invalid credentials"
+            });
+        }
+
+        // Verificar password
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            return res.status(401).json({
+                message: "Invalid credentials"
+            });
+        }
+
+        // Generar JWT token
+        const secretKey = process.env.JWT_SECRET || 'default-secret-key';
+        const token = jwt.sign(
+            {
+                userId: user.id,
+                nickname: user.nickname
+            },
+            secretKey,
+            {
+                expiresIn: '24h'
+            }
+        );
+
+        // Respuesta exitosa con token y datos del usuario (sin password)
+        const { password: _, ...userResponse } = user.toJSON();
+
+        res.status(200).json({
+            message: "Login successful",
+            token,
+            user: userResponse
+        });
+
+    } catch (error) {
+        console.error('Login error:', error);
+        res.status(500).json({
+            message: "Internal server error"
+        });
+    }
+};
+
+interface AuthRequest extends Request {
+    userId?: number;
+    nickname?: string;
+}
+
+const getProfile = async (req: AuthRequest, res: Response) => {
+    try {
+        const userId = req.userId;
+
+        if (!userId) {
+            return res.status(401).json({
+                message: "User not authenticated"
+            });
+        }
+
+        const user = await User.findByPk(userId, {
+            attributes: { exclude: ['password'] }
+        });
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        res.status(200).json(user);
+    } catch (error) {
+        console.error('Get profile error:', error);
+        res.status(500).json({
+            message: "Error fetching user profile"
+        });
+    }
+};
+
+export default { getAllUsers, createUser, updateUser, deleteUser, getUserById, login, getProfile };

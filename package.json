@@ -34,10 +34,14 @@
   },
   "dependencies": {
     "@sequelize/sqlite3": "^7.0.0-alpha.46",
+    "@types/cors": "^2.8.19",
+    "@types/jsonwebtoken": "^9.0.10",
     "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
     "csv-parser": "^3.2.0",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.2",
     "sequelize": "^6.37.7",
     "sqlite3": "^5.1.7"

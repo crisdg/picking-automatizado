@@ -1,12 +1,18 @@
 import { Router } from "express";
 import { userController } from "../controllers";
+import { authenticateToken } from "../middlewares/auth.middleware";
+
 const router = Router();
 
-router.get("/", userController.getAllUsers);
+// Rutas públicas
+router.post("/login", userController.login);
 router.post("/", userController.createUser);
-router.put("/:id", userController.updateUser);
-router.delete("/:id", userController.deleteUser);
-router.get("/:id", userController.getUserById);
 
+// Rutas protegidas (requieren autenticación)
+router.get("/profile", authenticateToken, userController.getProfile);
+router.get("/", authenticateToken, userController.getAllUsers);
+router.put("/:id", authenticateToken, userController.updateUser);
+router.delete("/:id", authenticateToken, userController.deleteUser);
+router.get("/:id", authenticateToken, userController.getUserById);
 
 export default router;
